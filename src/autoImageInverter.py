@@ -4,7 +4,7 @@ import os
 import os.path
 import argparse
 
-thresholdScale = 0.90   #The higher the more black pixels are needed to trigger an invert
+thresholdScale = 0.6   #The higher the more black pixels are needed to trigger an invert
 precision = 10          #Only process every precision'th line
 prefix = ""
 fileFilter = ".png"
@@ -46,7 +46,6 @@ def main():
     parser.add_argument('--filter', help='Filter applying when searching for images')
     parser.add_argument('--prefix', help='Prefix to indicate converted files')
     parser.add_argument('--precision', help='Only process every precision th line')
-    parser.add_argument('--skipConfirm', help='Skip confirmation for auto processing. Pass Y as value')
 
     args = parser.parse_args()
 
@@ -62,11 +61,6 @@ def main():
     if(args.precision):
         prefix = args.precision
 
-    skipConfirm = False
-    if(args.skipConfirm):
-        skipConfirm = True
-        confirm = args.skipConfirm
-
     #Cheching for files
     print("Those following images will be processed:")
 
@@ -78,22 +72,20 @@ def main():
             print(filePath)
 
     #Show summary
-    if(not skipConfirm):
-        confirm = raw_input("Press Y to continue, any other key to cancel: ")
+    confirm = raw_input("Press Y to continue, any other key to cancel: ")
 
     if(confirm == "Y"):
-        print("Processing.. This might take some time")
-
         #Processing
         invCounter = 0
         for filePath in fileList:
             image = cv2.imread(filePath)
-            imagem = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            image_gs = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            (thresh, image_bw) = cv2.threshold(image_gs, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
             print("Processing " + filePath)
-            if(autoThemeDetect(imagem)):
+            if(autoThemeDetect(image_bw)):
                 print("This Image will be inverted")
-                InvertImage(imagem, prefix+filePath)
+                InvertImage(image, prefix+filePath)
                 invCounter = invCounter + 1
 
         print("Inverted " + str(invCounter) + " images")
