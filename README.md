@@ -2,6 +2,9 @@
 
 Inverts a picture (and each other in the folder and it's subfolder) if there is more black than white pixels. I scripted this for my bachelorthesis where I've got plenty of diagrams crafted in a black theme, which don't look pretty well when printed.
 
+As it checks for the image theme each time the script is called, already inverted pictures won't be processed (inverted) again.
+
+
 # How To Use
 
 The script can be controlled by command line arguments. It needs to be placed in the top folder where the images are located.
