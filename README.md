@@ -13,9 +13,8 @@ The following shows the help:
 
 usage: autoImageInverter.py [-h] [--filter FILTER] [--prefix PREFIX]
                             [--precision PRECISION]
-                            [--skipConfirm SKIPCONFIRM]
 
-Process some integers.
+Automatical converts black-themed images to white-themed ones
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -23,5 +22,3 @@ optional arguments:
   --prefix PREFIX       Prefix to indicate converted files
   --precision PRECISION
                         Only process every precision th line
-  --skipConfirm SKIPCONFIRM
-                        Skip confirmation for auto processing. Pass Y as value
