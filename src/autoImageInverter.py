@@ -44,7 +44,7 @@ def autoThemeDetect(imagemem):
 
 def main():
     #Parsing Arguments
-    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser = argparse.ArgumentParser(description='Automatical converts black-themed images to white-themed ones')
     parser.add_argument('--filter', help='Filter applying when searching for images')
     parser.add_argument('--prefix', help='Prefix to indicate converted files')
     parser.add_argument('--precision', help='Only process every precision th line')
