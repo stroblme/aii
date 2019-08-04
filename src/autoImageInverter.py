@@ -3,10 +3,10 @@ import cv2
 import os
 import os.path
 import argparse
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 
-thresholdScale = 0.7   #The higher the more black pixels are needed to trigger an invert
-grayScaleThreshold = 0.001   #The lower the more Pixels darker the image has to be
+thresholdScale = 0.6   #The higher the more black pixels are needed to trigger an invert
+grayScaleThreshold = 0.05   #The lower the more Pixels darker the image has to be
 precision = 10          #Only process every precision'th line
 prefix = ""
 fileFilter = ".png"
@@ -74,7 +74,7 @@ def main():
             print(filePath)
 
     #Show summary
-    confirm = raw_input("Press Y to continue, any other key to cancel: ")
+    confirm = input("Press Y to continue, any other key to cancel: ")
 
 
 
@@ -82,10 +82,11 @@ def main():
         #Processing
 
         grayScaleVal = grayScaleThreshold*255
-		
+
         invCounter = 0
         for filePath in fileList:
             image = cv2.imread(filePath)
+
             image_gs = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             (thresh, image_bw) = cv2.threshold(image_gs, grayScaleVal, 255, cv2.THRESH_BINARY)
 

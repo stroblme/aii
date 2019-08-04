@@ -1,9 +1,18 @@
-# Auto Image Inverter
+# AII -Auto Image Inverter
 
 Inverts a picture (and each other in the folder and it's subfolder) if there is more black than white pixels. I scripted this for my bachelorthesis where I've got plenty of diagrams crafted in a black theme, which don't look pretty well when printed.
 
 As it checks for the image theme each time the script is called, already inverted pictures won't be processed (inverted) again.
 
+# Requisits
+
+You may need to install cv2 for python with
+
+´´´
+pip install opencv-python
+´´´
+
+AII is written in py3, so no guarantee that it will work in lower versions.
 
 # How To Use
 
