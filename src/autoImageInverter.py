@@ -6,7 +6,7 @@ import argparse
 # from matplotlib import pyplot as plt
 
 thresholdScale = 0.6   #The higher the more black pixels are needed to trigger an invert
-grayScaleThreshold = 0.05   #The lower the more Pixels darker the image has to be
+grayScaleThreshold = 0.3   #The lower the more Pixels darker the image has to be
 precision = 10          #Only process every precision'th line
 prefix = ""
 fileFilter = ".png"
