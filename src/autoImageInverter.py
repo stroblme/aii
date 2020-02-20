@@ -79,30 +79,37 @@ def main():
             fileList.append(filePath)
             print(filePath)
 
-    #Show summary
+
+
+    processList = list()
+
+    for filePath in fileList:
+        image = cv2.imread(filePath)
+
+        image_gs = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        (thresh, image_bw) = cv2.threshold(image_gs, grayScaleVal, 255, cv2.THRESH_BINARY)
+
+        print("Processing " + filePath)
+        if(autoThemeDetect(image_bw)):
+            print("This Image will be inverted")
+            processList.append(filePath)
+
+
+    grayScaleVal = grayScaleThreshold*255
+    invCounter = 0
+
+    print("Should I apply the conversion?")
     confirm = input("Press Y to continue, any other key to cancel: ")
-
-
 
     if(confirm == "Y"):
         #Processing
-
-        grayScaleVal = grayScaleThreshold*255
-
-        invCounter = 0
-        for filePath in fileList:
+        for filePath in processList:
             image = cv2.imread(filePath)
-
-            image_gs = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            (thresh, image_bw) = cv2.threshold(image_gs, grayScaleVal, 255, cv2.THRESH_BINARY)
-
-            print("Processing " + filePath)
-            if(autoThemeDetect(image_bw)):
-                print("This Image will be inverted")
-                InvertImage(image, prefix+filePath)
-                invCounter = invCounter + 1
+            InvertImage(image, prefix+filePath)
+            invCounter = invCounter + 1
 
         print("Inverted " + str(invCounter) + " images")
+
     else:
         print("Operation cancelled")
 
