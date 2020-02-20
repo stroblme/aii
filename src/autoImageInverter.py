@@ -3,6 +3,7 @@ import cv2
 import os
 import os.path
 import argparse
+import tkinter as tk
 # from matplotlib import pyplot as plt
 
 thresholdScale = 0.3   #The higher the more black pixels are needed to trigger an invert
@@ -12,6 +13,7 @@ prefix = ""
 fileFilter = ".png"
 reverseFunctionality = True
 
+root = tk.Tk()
 
 def InvertImage(imagem, name):
     imagem = cv2.bitwise_not(imagem)
