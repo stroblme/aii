@@ -5,11 +5,12 @@ import os.path
 import argparse
 # from matplotlib import pyplot as plt
 
-thresholdScale = 0.6   #The higher the more black pixels are needed to trigger an invert
-grayScaleThreshold = 0.3   #The lower the more Pixels darker the image has to be
-precision = 10          #Only process every precision'th line
+thresholdScale = 0.3   #The higher the more black pixels are needed to trigger an invert
+grayScaleThreshold = 0.8   #The lower the more Pixels darker the image has to be
+precision = 3          #Only process every precision'th line
 prefix = ""
 fileFilter = ".png"
+reverseFunctionality = True
 
 
 def InvertImage(imagem, name):
@@ -36,10 +37,16 @@ def autoThemeDetect(imagemem):
         else:
             precisionCounter = precisionCounter + 1
 
-    if(blackCount * thresholdScale > whiteCount):
-        return True
+    if reverseFunctionality:
+        if(blackCount < whiteCount * thresholdScale):
+            return True
+        else:
+            return False
     else:
-        return False
+        if(blackCount * thresholdScale > whiteCount):
+            return True
+        else:
+            return False
 
 
 def main():
@@ -86,8 +93,12 @@ def main():
     for filePath in fileList:
         image = cv2.imread(filePath)
 
-        image_gs = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        (thresh, image_bw) = cv2.threshold(image_gs, grayScaleVal, 255, cv2.THRESH_BINARY)
+        if reverseFunctionality:
+            image_gs = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            (thresh, image_bw) = cv2.threshold(image_gs, (1-grayScaleThreshold)*255, 255, cv2.THRESH_BINARY)
+        else:
+            image_gs = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            (thresh, image_bw) = cv2.threshold(image_gs, grayScaleThreshold*255, 255, cv2.THRESH_BINARY)
 
         print("Processing " + filePath)
         if(autoThemeDetect(image_bw)):
@@ -95,8 +106,11 @@ def main():
             processList.append(filePath)
 
 
-    grayScaleVal = grayScaleThreshold*255
     invCounter = 0
+
+    if len(processList) == 0:
+        print("No images to process")
+        return
 
     print("Should I apply the conversion?")
     confirm = input("Press Y to continue, any other key to cancel: ")
