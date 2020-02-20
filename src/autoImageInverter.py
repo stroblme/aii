@@ -13,7 +13,7 @@ prefix = ""
 fileFilter = ".png"
 reverseFunctionality = True
 
-root = tk.Tk()
+# root = tk.Tk()
 
 def InvertImage(imagem, name):
     imagem = cv2.bitwise_not(imagem)
@@ -86,7 +86,7 @@ def main():
         for filename in [f for f in filenames if f.endswith(fileFilter)]:
             filePath = os.path.join(dirpath, filename)
             fileList.append(filePath)
-            print(filePath)
+            # print(filePath)
 
 
 
