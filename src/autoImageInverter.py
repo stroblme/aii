@@ -63,11 +63,17 @@ def main():
     if(args.precision):
         prefix = args.precision
 
+    rootPath = ""
+    while not os.path.isdir(rootPath):
+        rootPath = input("Enter the root path for your images\n")
+        if not os.path.isdir(rootPath):
+            print("Please enter a valid path")
+
     #Cheching for files
     print("Those following images will be processed:")
 
     fileList = []
-    for dirpath, dirnames, filenames in os.walk("."):
+    for dirpath, dirnames, filenames in os.walk(rootPath):
         for filename in [f for f in filenames if f.endswith(fileFilter)]:
             filePath = os.path.join(dirpath, filename)
             fileList.append(filePath)
